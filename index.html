@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Three.js GLB Example</title>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js",
+                "three/GLTFLoader": "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/loaders/GLTFLoader.js",
+                "three/OrbitControls": "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js"
+            }
+        }
+    </script>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            background-color: black;
+        }
+
+        canvas {
+            display: block; 
+            width: 100vw; 
+            height: 100vh;
+        }
+        
+        h1 {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>GARAGEQL</h1>
+    <script type="module">
+        import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js';
+        import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js'; // Import OrbitControls
+
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight); 
+        document.body.appendChild(renderer.domElement);
+
+        // Load the GLTF model
+        const loader = new GLTFLoader();
+        loader.load(
+            'models/mymodel3.glb', 
+            function (gltf) {
+                const model = gltf.scene;
+                scene.add(model);
+                model.position.set(0, 0, 0); 
+                model.scale.set(2, 2, 2); 
+
+                console.log('Model Loaded:', gltf);
+            },
+            undefined,
+            function (error) {
+                console.error('Error loading model:', error);
+            }
+        );
+
+        const directionalLight1 = new THREE.DirectionalLight(0x2C3E50, 1); // Night-time light color
+        directionalLight1.position.set(5, 0, 5).normalize();
+        scene.add(directionalLight1);
+
+        const directionalLight2 = new THREE.DirectionalLight(0x2C3E50, 1);
+        directionalLight2.position.set(-5, 0, 5).normalize();
+        scene.add(directionalLight2);
+
+        const directionalLight3 = new THREE.DirectionalLight(0x2C3E50, 1);
+        directionalLight3.position.set(5, 0, 5).normalize();
+        scene.add(directionalLight3);
+
+        const directionalLight4 = new THREE.DirectionalLight(0x2C3E50, 1);
+        directionalLight4.position.set(-5, 0, 5).normalize();
+        scene.add(directionalLight4);
+
+        camera.position.set(0, 0, 4);
+        
+        // Enable OrbitControls for camera rotation, panning, and zooming
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.25;
+        controls.screenSpacePanning = false;
+
+        // Prevent vertical rotation (up and down) by limiting the polar angle
+        controls.maxPolarAngle = Math.PI / 2; // 90 degrees (horizontal)
+        controls.minPolarAngle = Math.PI / 2; // 90 degrees (horizontal)
+        
+        controls.maxAzimuthAngle = Math.PI / 4;
+        controls.minAzimuthAngle = -Math.PI / 4;
+        // Set zoom limitations
+        controls.enableZoom = false; // Disable zoom functionality
+
+        // Disable panning
+        controls.enablePan = false;
+        
+        // Handle the wheel zoom manually (disable mouse wheel zoom)
+        renderer.domElement.addEventListener('wheel', (event) => {
+            event.preventDefault(); // Prevent zoom via mouse wheel
+        });
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update(); // Update the controls every frame
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize to update camera aspect ratio and renderer size
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+    </script>
+</body>
+</html>
