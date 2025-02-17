@@ -9,23 +9,32 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-let garageDoor, garageLamp, garageCar, flickerInterval; 
+let garageDoor, garageLamp, garageCar, flickerInterval, garageBoard, garageThinLight; 
 let isDoorOpen = false; 
 const loader = new GLTFLoader();
+
+const placeholder = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1),
+    new THREE.MeshBasicMaterial({ color: 0x555555, wireframe: true })
+);
+scene.add(placeholder);
+
 loader.load(
-    'assets/model/mymodel.glb',
+    'assets/model/mymodel5.glb',
     function (gltf) {
+        scene.remove(placeholder);
         const model = gltf.scene;
         scene.add(model);
-        model.position.set(0, 0, 0);
+        model.position.set(-2, 0, 0);
         model.scale.set(2, 2, 2);
         garageDoor = model.getObjectByName('rollershutter_window_01_graffiti016'); 
         garageCar = model.getObjectByName('covered_car'); 
         garageLamp = model.getObjectByName('Light'); 
+        garageBoard = model.getObjectByName('Board'); 
+        garageThinLight = model.getObjectByName('Cylinder001'); 
 
         model.traverse(element => {
             console.log(element.name);
-
             if (element.name.includes("Cube")) { 
                 if (Array.isArray(element.material)) {
                     element.material.forEach(mat => {
@@ -56,6 +65,16 @@ loader.load(
         } else {
             console.warn('Lamp not found in model.');
         }
+        if (garageBoard) {
+            addBoardLight(garageBoard);
+        } else {
+            console.warn('Lamp not found in model.');
+        }
+        if (garageThinLight) {
+            // addThinLight(garageThinLight);
+        } else {
+            console.warn('Lamp not found in model.');
+        }
 
     },
     undefined,
@@ -65,25 +84,34 @@ loader.load(
 );  
 
 function addCarLight(car) {
-    const carLight = new THREE.AmbientLight(0xffffff, 2.5, 5); 
+    const carLight = new THREE.AmbientLight(0xffffff, 1, 1); 
     carLight.castShadow = true;
-    
     car.add(carLight); 
 }
 function addLampLight(lamp) {
-    const lampLight = new THREE.PointLight(0xffffff, 100, 2);
+    const lampLight = new THREE.PointLight(0xffffff, 50, 2);
     lampLight.position.set(0, -1, 0);  
     lampLight.castShadow = true;
-    
-    lamp.add(lampLight); 
+    lamp.add(lampLight);
 }
+function addBoardLight(board) {
+    const boardLight = new THREE.AmbientLight(0xffffff, 0.3);    
+    boardLight.castShadow = true;
+    board.add(boardLight); 
+}
+// function addThinLight(thinLight) {
+//     const boardThinLight = new THREE.PointLight(0xffffff, 1, 1);
+//     boardThinLight.castShadow = true;
+//     thinLight.add(boardThinLight); 
+// }
+
 
 function toggleGarageDoor() {
     if (garageDoor) {
         if (isDoorOpen) {
             gsap.to(garageDoor.position, { y: garageDoor.userData.initialY, duration: 1 });
             stopFlickerLoop();
-            generateGraphs();
+            // generateGraphs();
         } else {
             gsap.to(garageDoor.position, { y: 0.6, duration: 1 });
             let timer = setTimeout(() => {  
@@ -130,7 +158,6 @@ function startFlickerLoop() {
 function stopFlickerLoop() {
     clearInterval(flickerInterval);
 }
-
 
 window.addEventListener('click', (event) => {
     const raycaster = new THREE.Raycaster();

@@ -17,8 +17,8 @@
     <style>
         @font-face {
             font-family: 'ScaryFont';
-            src: url('font/OctoberCrow.ttf') format('truetype'); 
-            font-weight: normal;
+            src: url('assets/font/OctoberCrow.ttf') format('truetype'); 
+            font-weight: bold;
             font-style: normal;
         }
 
@@ -54,11 +54,23 @@
             height: 17.4%;
             width: 100%;
         }
+
+        .loginContainer {
+            z-index: 999;
+            position: absolute;
+        }
     </style>
 </head>
 <body>
     <h1>Garage-QL</h1>
     <div class="cover"></div>
+    <div class="loginContainer">
+        <form action="" method="post">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
     <script type="module" src="3Dbackground.js"></script>
 </body>
 </html>
