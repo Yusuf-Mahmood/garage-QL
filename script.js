@@ -41,7 +41,6 @@ loader.load(
             }
         });
 
-
         if (garageDoor) {
             garageDoor.userData.initialY = garageDoor.position.y; 
         } else {

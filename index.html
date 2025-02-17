@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three.js GLB Example</title>
+    <title>GarageQL</title>
     <script type="importmap">
         {
             "imports": {
@@ -15,6 +15,13 @@
     </script>
 
     <style>
+        @font-face {
+            font-family: 'ScaryFont';
+            src: url('font/OctoberCrow.ttf') format('truetype'); 
+            font-weight: normal;
+            font-style: normal;
+        }
+
         html, body {
             margin: 0;
             padding: 0;
@@ -34,8 +41,9 @@
             top: 5%;
             left: 50%;
             transform: translate(-50%, -50%);
-            color: white;
-            font-family: Arial, sans-serif;
+            color: rgb(79, 73, 73);
+            font-family: 'ScaryFont';
+            letter-spacing: 5px;
             font-size: 3rem;
             z-index: 1;
         }
@@ -49,7 +57,7 @@
     </style>
 </head>
 <body>
-    <h1>GarageQL</h1>
+    <h1>Garage-QL</h1>
     <div class="cover"></div>
     <script type="module" src="script.js"></script>
 </body>
