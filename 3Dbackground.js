@@ -9,11 +9,11 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-let garageDoor, garageLamp, garageCar; 
+let garageDoor, garageLamp, garageCar, flickerInterval; 
 let isDoorOpen = false; 
 const loader = new GLTFLoader();
 loader.load(
-    'models/mymodel8.glb',
+    'assets/model/mymodel.glb',
     function (gltf) {
         const model = gltf.scene;
         scene.add(model);
@@ -89,23 +89,21 @@ function toggleGarageDoor() {
             let timer = setTimeout(() => {  
                 startFlickerLoop();
                 clearTimeout(timer);
-            }, 1000);
+            }, 0);
 
         }
         isDoorOpen = !isDoorOpen;
     }
 }
 
-let flickerInterval; 
-
 function flickerLights() {
     const lights = [];
 
     if (garageLamp && garageLamp.children.length > 0) {
-        lights.push(garageLamp.children[0]); // Add lamp light
+        lights.push(garageLamp.children[0]); 
     }
     if (garageCar && garageCar.children.length > 0) {
-        lights.push(garageCar.children[0]); // Add car light
+        lights.push(garageCar.children[0]);
     }
 
     if (lights.length === 0) return;
@@ -118,7 +116,7 @@ function flickerLights() {
 }
 
 function startFlickerLoop() {
-    if (flickerInterval) clearInterval(flickerInterval); // Stop any existing loop
+    if (flickerInterval) clearInterval(flickerInterval);
 
     flickerInterval = setInterval(() => {
         if (!isDoorOpen) {
@@ -126,7 +124,7 @@ function startFlickerLoop() {
             return;
         }
         flickerLights();
-    }, Math.random() * 5000 + 2000); // Random flicker between 2-7 seconds
+    }, Math.random() * 5000 + 2000);
 }
 
 function stopFlickerLoop() {
@@ -185,7 +183,3 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 });
-
-function generateGraphs() {
-
-}
