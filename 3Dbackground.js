@@ -76,6 +76,7 @@ loader.load(
             console.warn('Lamp not found in model.');
         }
 
+        document.getElementsByTagName('img')[0].style.opacity = 0.05;
     },
     undefined,
     function (error) {
