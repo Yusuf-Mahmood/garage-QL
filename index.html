@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GarageQL</title>
+    <title>Garage-QL</title>
+    <link rel="stylesheet" href="index.css">
     <script type="importmap">
         {
             "imports": {
@@ -13,111 +14,22 @@
             }
         }
     </script>
-
-    <style>
-        @font-face {
-            font-family: 'ScaryFont';
-            src: url('assets/font/OctoberCrow.ttf') format('truetype'); 
-            font-weight: bold;
-            font-style: normal;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-            background-color: black;
-        }
-
-        canvas {
-            display: block; 
-            width: 100vw; 
-            height: 100vh;
-        }
-        
-        h1 {
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: rgb(182, 180, 180);
-            font-family: 'ScaryFont';
-            letter-spacing: 5px;
-            font-size: 3rem;
-            z-index: 1;
-        }
-
-        .cover {
-            position: absolute;
-            background-color: black;
-            height: 17.4%;
-            width: 100%;
-        }
-
-        .loginContainer {
-            z-index: 999;
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            right: 20%;
-            bottom: 40%;
-        }
-
-        input {
-            padding: 0.8rem;
-            border: none;
-            outline: none;
-            border-radius: 0.5rem;
-            width: 13rem;
-            background-color: rgba(35, 35, 35, 0.738);
-            color: white;
-        }
-        
-        input[type="submit"] {
-            letter-spacing: 1px;
-            margin-top: 2rem;
-            align-self: center;
-            width: 10rem;
-            cursor: pointer;
-            &:hover{
-                background-color: rgb(104, 103, 103);
-                color: black;
-            }
-        }
-        
-        label {
-            margin-top: 1.5rem;
-            color: rgb(182, 180, 180);
-            font-family: 'ScaryFont';
-            font-size: 1.5rem;
-            padding: 10px;
-            letter-spacing: 5px;
-        }
-
-        img {
-            position: absolute;
-            bottom: 32%;
-            left: 1%;
-            width: 30%;
-            z-index: 1;
-            opacity: 0;
-        }
-    </style>
 </head>
 <body>
-    <h1>Garage-QL</h1>
-    <div class="cover"></div>
-    <img src="assets/images/humanoid.png" alt="humanoid">
-    <form action="" method="post">
-        <div class="loginContainer">
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="Enter your username" required>
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Enter your password" required>
-            <input type="submit" value="Submit">
-        </div>
-    </form>
+    <div class="container">
+        <h1>Garage-QL</h1>
+        <img src="assets/images/humanoid.png" alt="humanoid">
+        <form action="" method="post">
+            <div class="loginContainer">
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="Enter your username" required>
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                <input type="submit" value="Submit" id="submitBtn">
+            </div>
+        </form>
+    </div>
     <script type="module" src="3Dbackground.js"></script>
+    <script type="module" src="fetchData.js"></script>
 </body>
 </html>

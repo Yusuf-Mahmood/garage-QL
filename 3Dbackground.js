@@ -20,7 +20,7 @@ const placeholder = new THREE.Mesh(
 scene.add(placeholder);
 
 loader.load(
-    'assets/model/mymodel5.glb',
+    'assets/model/mymodel.glb',
     function (gltf) {
         scene.remove(placeholder);
         const model = gltf.scene;
@@ -35,6 +35,9 @@ loader.load(
 
         model.traverse(element => {
             console.log(element.name);
+            if (element.name.includes("Light")) {
+
+            }
             if (element.name.includes("Cube")) { 
                 if (Array.isArray(element.material)) {
                     element.material.forEach(mat => {
@@ -68,12 +71,12 @@ loader.load(
         if (garageBoard) {
             addBoardLight(garageBoard);
         } else {
-            console.warn('Lamp not found in model.');
+            console.warn('Board not found in model.');
         }
         if (garageThinLight) {
-            // addThinLight(garageThinLight);
+            addThinLight(garageThinLight);
         } else {
-            console.warn('Lamp not found in model.');
+            console.warn('Thin light not found in model.');
         }
 
         document.getElementsByTagName('img')[0].style.opacity = 0.05;
@@ -100,11 +103,11 @@ function addBoardLight(board) {
     boardLight.castShadow = true;
     board.add(boardLight); 
 }
-// function addThinLight(thinLight) {
-//     const boardThinLight = new THREE.PointLight(0xffffff, 1, 1);
-//     boardThinLight.castShadow = true;
-//     thinLight.add(boardThinLight); 
-// }
+function addThinLight(thinLight) {
+    const boardThinLight = new THREE.AmbientLight(0xffffff, 0.1);
+    boardThinLight.castShadow = true;
+    thinLight.add(boardThinLight); 
+}
 
 
 function toggleGarageDoor() {
@@ -112,7 +115,7 @@ function toggleGarageDoor() {
         if (isDoorOpen) {
             gsap.to(garageDoor.position, { y: garageDoor.userData.initialY, duration: 1 });
             stopFlickerLoop();
-            // generateGraphs();
+            
         } else {
             gsap.to(garageDoor.position, { y: 0.6, duration: 1 });
             let timer = setTimeout(() => {  
@@ -160,6 +163,35 @@ function stopFlickerLoop() {
     clearInterval(flickerInterval);
 }
 
+function moveToBoard() {
+    controls.maxPolarAngle = Infinity;
+    controls.minPolarAngle = -Infinity;
+    controls.maxAzimuthAngle = Infinity;
+    controls.minAzimuthAngle = -Infinity;
+
+    document.getElementsByClassName('container')[0].style.display = "none";
+    const targetPosition = new THREE.Vector3();
+    garageBoard.getWorldPosition(targetPosition);
+    
+    gsap.to(camera.position, {
+        x: targetPosition.x += 0.7, 
+        y: targetPosition.y += 0.4, 
+        z: targetPosition.z,
+        duration: 2,
+        ease: "power2.inOut",
+        onUpdate: () => {
+            controls.target.lerp(targetPosition, 0.1); 
+            controls.update();
+        },
+    });
+
+    gsap.to(camera.rotation, {
+        y: targetPosition.x -= 0.2,
+        duration: 1.5,
+        ease: "power2.inOut",
+    });
+}
+
 window.addEventListener('click', (event) => {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -176,7 +208,7 @@ window.addEventListener('click', (event) => {
 });
 
 const directionalLight1 = new THREE.DirectionalLight(0x2C3E50, 1);
-directionalLight1.position.set(5, 1, 5);
+directionalLight1.position.set(10, 1, 5);
 scene.add(directionalLight1);
 
 const directionalLight2 = new THREE.DirectionalLight(0x2C3E50, 1);
@@ -210,4 +242,9 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
+});
+
+document.getElementById("submitBtn").addEventListener("click", (event) => {
+    event.preventDefault(); 
+    moveToBoard(); 
 });
