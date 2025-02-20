@@ -11,7 +11,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 let garageDoor, garageLamp, garageCar, flickerInterval, garageBoard, garageThinLight; 
 let isDoorOpen = false; 
-const loader = new GLTFLoader();
+const humanoid = document.getElementById("humanoid");
 
 const placeholder = new THREE.Mesh(
     new THREE.BoxGeometry(1, 1, 1),
@@ -19,6 +19,7 @@ const placeholder = new THREE.Mesh(
 );
 scene.add(placeholder);
 
+const loader = new GLTFLoader();
 loader.load(
     'assets/model/mymodel.glb',
     function (gltf) {
@@ -79,7 +80,7 @@ loader.load(
             console.warn('Thin light not found in model.');
         }
 
-        document.getElementsByTagName('img')[0].style.opacity = 0.05;
+        document.getElementsByTagName('img')[0].style.opacity = 0.07;
     },
     undefined,
     function (error) {
@@ -108,7 +109,6 @@ function addThinLight(thinLight) {
     boardThinLight.castShadow = true;
     thinLight.add(boardThinLight); 
 }
-
 
 function toggleGarageDoor() {
     if (garageDoor) {
@@ -246,5 +246,23 @@ window.addEventListener('resize', () => {
 
 document.getElementById("submitBtn").addEventListener("click", (event) => {
     event.preventDefault(); 
-    moveToBoard(); 
+    if (isDoorOpen) {
+        moveToBoard();
+    } else {
+        gsap.to(garageDoor.material.color, { r: 1, g: 0, b: 0, duration: 0.5, onComplete: () => {
+            gsap.to(garageDoor.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
+        }});
+    }
+});
+
+humanoid.addEventListener("click", () => {
+        humanoid.style.width = "200%";
+        humanoid.style.height = "200%";
+        humanoid.style.opacity = "0.6";
+        humanoid.style.bottom = "-100%";
+        humanoid.style.left = "-50%";
+
+    setTimeout(() => {
+        humanoid.style.display = "none";
+    }, 500); 
 });

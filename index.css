@@ -71,11 +71,11 @@ label {
     letter-spacing: 5px;
 }
 
-img {
+.image {
     position: absolute;
     bottom: 32%;
     left: 1%;
-    width: 30%;
     z-index: 1;
     opacity: 0;
+    background-color: red;
 }
