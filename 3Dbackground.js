@@ -36,9 +36,6 @@ loader.load(
 
         model.traverse(element => {
             console.log(element.name);
-            if (element.name.includes("Light")) {
-
-            }
             if (element.name.includes("Cube")) { 
                 if (Array.isArray(element.material)) {
                     element.material.forEach(mat => {
@@ -79,11 +76,12 @@ loader.load(
         } else {
             console.warn('Thin light not found in model.');
         }
-
-        document.getElementsByTagName('img')[0].style.opacity = 0.07;
-    },
-    undefined,
-    function (error) {
+        if (Math.random() < 0.6) { 
+            humanoid.style.display = 'flex';
+        }
+        },
+        undefined,
+        function (error) {
         console.error('Error loading model:', error);
     }
 );  
@@ -256,13 +254,24 @@ document.getElementById("submitBtn").addEventListener("click", (event) => {
 });
 
 humanoid.addEventListener("click", () => {
-        humanoid.style.width = "200%";
-        humanoid.style.height = "200%";
-        humanoid.style.opacity = "0.6";
-        humanoid.style.bottom = "-100%";
-        humanoid.style.left = "-50%";
+    const audio = new Audio('assets/jumpscare.mp3');
+    audio.play();
 
-    setTimeout(() => {
-        humanoid.style.display = "none";
-    }, 500); 
+    gsap.to(humanoid, {
+        scale: 15,
+        left: 500,
+        top: 1550,
+        opacity: 1,
+        duration: 0.3, 
+        ease: "power2.inOut",
+        onComplete: () => {
+            setTimeout(() => {
+                gsap.to(humanoid, {
+                    display: 'none',
+                    ease: "power2.inOut",
+                    duration: 0.3
+                });
+            }, 100);
+        }
+    });
 });

@@ -73,9 +73,16 @@ label {
 
 .image {
     position: absolute;
-    bottom: 32%;
-    left: 1%;
-    z-index: 1;
-    opacity: 0;
-    background-color: red;
+    bottom: 69%;
+    left: 12%;
+    z-index: 999;
+    width: 0;
+}
+
+#humanoid {
+    /* background-color: red; */
+    position: absolute;
+    display: none;
+    opacity: 0.08;
+    width: 6rem;
 }
