@@ -10,7 +10,7 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 let garageDoor, garageLamp, garageCar, flickerInterval, garageBoard, garageThinLight; 
-let isDoorOpen = false; 
+export let isDoorOpen = false; 
 const humanoid = document.getElementById("humanoid");
 
 const placeholder = new THREE.Mesh(
@@ -35,7 +35,7 @@ loader.load(
         garageThinLight = model.getObjectByName('Cylinder001'); 
 
         model.traverse(element => {
-            console.log(element.name);
+            // console.log(element.name);
             if (element.name.includes("Cube")) { 
                 if (Array.isArray(element.material)) {
                     element.material.forEach(mat => {
@@ -188,6 +188,8 @@ function moveToBoard() {
         duration: 1.5,
         ease: "power2.inOut",
     });
+    humanoid.style.left = 50;
+    humanoid.style.backgroundColor = 'red';
 }
 
 window.addEventListener('click', (event) => {
@@ -242,25 +244,23 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 });
 
-document.getElementById("submitBtn").addEventListener("click", (event) => {
-    event.preventDefault(); 
+document.getElementById("submitBtn").addEventListener("click", () => {
     if (isDoorOpen) {
-        moveToBoard();
     } else {
-        gsap.to(garageDoor.material.color, { r: 1, g: 0, b: 0, duration: 0.5, onComplete: () => {
+        gsap.to(garageDoor.material.color, { r: 0, g: 1, b: 0, duration: 0.5, onComplete: () => {
             gsap.to(garageDoor.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
         }});
     }
 });
 
-humanoid.addEventListener("click", () => {
+humanoid.addEventListener("mouseenter", () => {
     const audio = new Audio('assets/jumpscare.mp3');
     audio.play();
 
     gsap.to(humanoid, {
         scale: 15,
-        left: 500,
-        top: 1550,
+        left: 730,
+        top: 1750,
         opacity: 1,
         duration: 0.3, 
         ease: "power2.inOut",

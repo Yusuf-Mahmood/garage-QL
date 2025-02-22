@@ -72,7 +72,7 @@ label {
 }
 
 .image {
-    position: absolute;
+    position: fixed;
     bottom: 69%;
     left: 12%;
     z-index: 999;
@@ -80,9 +80,19 @@ label {
 }
 
 #humanoid {
-    /* background-color: red; */
-    position: absolute;
+    position: fixed;
     display: none;
     opacity: 0.08;
     width: 6rem;
+}
+
+@media (min-height: 864px) {
+    .image {
+        display: none;
+    }
+}
+@media (max-width: 768px) {
+    .loginContainer {
+        right: 10%;
+    }
 }
