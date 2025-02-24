@@ -72,35 +72,35 @@ label {
 }
 
 #graphContainer, #userInfo, #skillsGraphContainer {
-    /* display: none; */
     background-color: rgba(0, 0, 0, 0.29);
     position: absolute;
     border-radius: 0.5rem;
     padding: 1rem;
     font-family: Arial, Helvetica, sans-serif;
-    animation: scaleUp 0.5s ease-in-out;
-}
-
-@keyframes scaleUp {
-    0% {
-        transform: scale(0);
-    }
-    100% {
-        transform: scale(1);
-    }
 }
 
 #userInfo {
     color: white;
-    transform: translate(15%, 100%);
+    transform: translate(10.9%, 78.5%);
+    letter-spacing: 2px;
 }
 
 #graphContainer {
-    transform: translate(10%, 199%);
+    transform: translate(10.4%, 197%);
 }
 
 #skillsGraphContainer {
-    transform: translate(135%, 35%);
+    transform: translate(131.9%, 34%);
+}
+
+.firstSec, .secondSec {
+    display: flex;
+    gap: 5%;
+}
+
+.lines {
+    display: flex;
+    justify-content: center;
 }
 
 .image {
@@ -122,6 +122,20 @@ label {
     .image {
         display: none;
     }
+    #userInfo {
+        color: white;
+        transform: translate(8.3%, 92.5%);
+        letter-spacing: 2px;
+    }
+    
+    #graphContainer {
+        transform: translate(8%, 209%);
+    }
+    
+    #skillsGraphContainer {
+        transform: translate(131.9%, 40%);
+    }
+    
 }
 @media (max-width: 768px) {
     .loginContainer {

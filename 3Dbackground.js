@@ -321,3 +321,10 @@ export function jumpscare() {
 humanoid.addEventListener("mouseenter", () => {
     jumpscare();
 });
+
+window.addEventListener("keyup", (event) => {
+    console.log(event.key);
+    if (event.key === " "){
+        toggleGarageDoor();
+    }
+});
