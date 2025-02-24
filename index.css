@@ -71,6 +71,38 @@ label {
     letter-spacing: 5px;
 }
 
+#graphContainer, #userInfo, #skillsGraphContainer {
+    /* display: none; */
+    background-color: rgba(0, 0, 0, 0.29);
+    position: absolute;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    animation: scaleUp 0.5s ease-in-out;
+}
+
+@keyframes scaleUp {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#userInfo {
+    color: white;
+    transform: translate(15%, 100%);
+}
+
+#graphContainer {
+    transform: translate(10%, 199%);
+}
+
+#skillsGraphContainer {
+    transform: translate(135%, 35%);
+}
+
 .image {
     position: fixed;
     bottom: 69%;

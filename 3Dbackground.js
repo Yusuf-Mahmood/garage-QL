@@ -109,21 +109,19 @@ function addThinLight(thinLight) {
 }
 
 function toggleGarageDoor() {
-    if (garageDoor) {
-        if (isDoorOpen) {
-            gsap.to(garageDoor.position, { y: garageDoor.userData.initialY, duration: 1 });
-            stopFlickerLoop();
-            
-        } else {
-            gsap.to(garageDoor.position, { y: 0.6, duration: 1 });
-            let timer = setTimeout(() => {  
-                startFlickerLoop();
-                clearTimeout(timer);
-            }, 0);
+    if (isDoorOpen) {
+        gsap.to(garageDoor.position, { y: garageDoor.userData.initialY, duration: 1 });
+        stopFlickerLoop();
+        
+    } else {
+        gsap.to(garageDoor.position, { y: 0.6, duration: 1 });
+        let timer = setTimeout(() => {  
+            startFlickerLoop();
+            clearTimeout(timer);
+        }, 0);
 
-        }
-        isDoorOpen = !isDoorOpen;
     }
+    isDoorOpen = !isDoorOpen;
 }
 
 function flickerLights() {
@@ -161,35 +159,38 @@ function stopFlickerLoop() {
     clearInterval(flickerInterval);
 }
 
-function moveToBoard() {
-    controls.maxPolarAngle = Infinity;
-    controls.minPolarAngle = -Infinity;
-    controls.maxAzimuthAngle = Infinity;
-    controls.minAzimuthAngle = -Infinity;
+export async function moveToBoard() {
+    return new Promise((resolve) => {
+        controls.maxPolarAngle = Infinity;
+        controls.minPolarAngle = -Infinity;
+        controls.maxAzimuthAngle = Infinity;
+        controls.minAzimuthAngle = -Infinity;
 
-    document.getElementsByClassName('container')[0].style.display = "none";
-    const targetPosition = new THREE.Vector3();
-    garageBoard.getWorldPosition(targetPosition);
-    
-    gsap.to(camera.position, {
-        x: targetPosition.x += 0.7, 
-        y: targetPosition.y += 0.4, 
-        z: targetPosition.z,
-        duration: 2,
-        ease: "power2.inOut",
-        onUpdate: () => {
-            controls.target.lerp(targetPosition, 0.1); 
-            controls.update();
-        },
-    });
+        document.getElementsByClassName('container')[0].style.display = "none";
+        const targetPosition = new THREE.Vector3();
+        garageBoard.getWorldPosition(targetPosition);
 
-    gsap.to(camera.rotation, {
-        y: targetPosition.x -= 0.2,
-        duration: 1.5,
-        ease: "power2.inOut",
+        gsap.to(camera.position, {
+            x: targetPosition.x += 0.7, 
+            y: targetPosition.y += 0.4, 
+            z: targetPosition.z,
+            duration: 2,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                controls.target.lerp(targetPosition, 0.1); 
+                controls.update();
+            },
+            onComplete: resolve 
+        });
+
+        gsap.to(camera.rotation, {
+            y: targetPosition.x -= 0.2,
+            duration: 1.5,
+            ease: "power2.inOut",
+        });
+        humanoid.style.left = 50;
+        humanoid.style.backgroundColor = 'red';
     });
-    humanoid.style.left = 50;
-    humanoid.style.backgroundColor = 'red';
 }
 
 window.addEventListener('click', (event) => {
@@ -247,31 +248,76 @@ window.addEventListener('resize', () => {
 document.getElementById("submitBtn").addEventListener("click", () => {
     if (isDoorOpen) {
     } else {
-        gsap.to(garageDoor.material.color, { r: 0, g: 1, b: 0, duration: 0.5, onComplete: () => {
+        gsap.to(garageDoor.material.color, { r: 1, g: 0, b: 0, duration: 0.5, onComplete: () => {
             gsap.to(garageDoor.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
         }});
     }
 });
 
-humanoid.addEventListener("mouseenter", () => {
+export function jumpscare() {
     const audio = new Audio('assets/jumpscare.mp3');
     audio.play();
 
-    gsap.to(humanoid, {
-        scale: 15,
-        left: 730,
-        top: 1750,
+    const flash = document.createElement('div');
+    flash.style.position = 'fixed';
+    flash.style.top = 0;
+    flash.style.left = 0;
+    flash.style.width = '100%';
+    flash.style.height = '100%';
+    flash.style.backgroundColor = 'black';
+    flash.style.opacity = 0;
+    flash.style.zIndex = 9999;
+    document.body.appendChild(flash);
+
+    gsap.to(flash, {
         opacity: 1,
-        duration: 0.3, 
-        ease: "power2.inOut",
+        duration: 0.1,
+        yoyo: true,
+        repeat: 1,
         onComplete: () => {
-            setTimeout(() => {
-                gsap.to(humanoid, {
-                    display: 'none',
-                    ease: "power2.inOut",
-                    duration: 0.3
-                });
-            }, 100);
+            document.body.removeChild(flash);
+            gsap.to(humanoid, {
+                scale: 15,
+                left: 730,
+                top: 1750,
+                opacity: 1,
+                duration: 0.3, 
+                ease: "power2.inOut",
+                onComplete: () => {
+                    setTimeout(() => {
+                        gsap.to(humanoid, {
+                            display: 'none',
+                            ease: "power2.inOut",
+                            duration: 0.3,
+                            onComplete: () => {
+                                const randomTime = Math.random() * 5000 + 2000;
+                                setTimeout(() => {
+                                    gsap.to(humanoid, {
+                                        display: 'flex',
+                                        opacity: 1,
+                                        duration: 0.3,
+                                        ease: "power2.inOut",
+                                        onComplete: () => {
+                                            const flashInterval = setInterval(() => {
+                                                flash.style.opacity = flash.style.opacity === '1' ? '0' : '1';
+                                            }, 100);
+
+                                            setTimeout(() => {
+                                                clearInterval(flashInterval);
+                                                flash.style.opacity = '0';
+                                            }, 2000);
+                                        }
+                                    });
+                                }, randomTime);
+                            }
+                        });
+                    }, 100);
+                }
+            });
         }
     });
+}
+
+humanoid.addEventListener("mouseenter", () => {
+    jumpscare();
 });
