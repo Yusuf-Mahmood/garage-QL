@@ -24,17 +24,17 @@
         </div>
         <form id="loginForm" method="post">
             <div class="loginContainer">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter your username" required autocomplete="off">
+                <label for="username">Username·Email</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username or email" required autocomplete="off">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 <input type="submit" value="Submit" id="submitBtn">
             </div>
         </form>
     </div>
-    <div id="graphContainer"></div>
-    <div id="skillsGraphContainer"></div>
-    <div id="userInfo"></div>
+    <div class="svg-graph" id="graphContainer"></div>
+    <div class="svg-graph" id="skillsGraphContainer"></div>
+    <div class="svg-graph" id="userInfo"></div>
     <script type="module" src="3Dbackground.js"></script>
     <script type="module" src="fetchData.js"></script>
     <script type="module" src="displaySVGs.js"></script>

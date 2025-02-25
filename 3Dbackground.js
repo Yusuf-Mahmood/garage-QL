@@ -161,8 +161,8 @@ function stopFlickerLoop() {
 
 export async function moveToBoard() {
     return new Promise((resolve) => {
-        controls.maxPolarAngle = Infinity;
-        controls.minPolarAngle = -Infinity;
+        controls.maxPolarAngle = Math.PI / 2 + 0.8; 
+        controls.minPolarAngle = Math.PI / 2 - 0.8;
         controls.maxAzimuthAngle = Infinity;
         controls.minAzimuthAngle = -Infinity;
 
@@ -192,6 +192,39 @@ export async function moveToBoard() {
         humanoid.style.backgroundColor = 'red';
     });
 }
+
+function updateSVGVisibility() {
+    if (!garageBoard) return;
+    
+    const vector = new THREE.Vector3();
+    garageBoard.getWorldPosition(vector);
+    vector.project(camera);
+    
+    const boardX = (vector.x * 0.5 + 0.5) * window.innerWidth;
+    const boardY = (0.5 - (vector.y * 0.5 + 0.5)) * window.innerHeight;
+
+    const svgs = document.querySelectorAll(".svg-graph");
+    
+    svgs.forEach(svg => {
+        const rect = svg.getBoundingClientRect();
+        const svgCenterX = rect.left + rect.width / 2;
+        const svgCenterY = rect.top + rect.height / 2;
+        const distance = Math.sqrt(
+            Math.pow(svgCenterX - boardX, 2) +
+            Math.pow(svgCenterY - boardY, 2)
+        );
+        
+        const maxDistance = Math.max(window.innerWidth, window.innerHeight) * 0.4;
+        if (distance < maxDistance && Math.abs(vector.z) < 1) {
+            svg.style.opacity = "1";
+            svg.style.pointerEvents = "auto"; 
+        } else {
+            svg.style.opacity = "0";
+            svg.style.pointerEvents = "none"; 
+        }
+    });
+}
+
 
 window.addEventListener('click', (event) => {
     const raycaster = new THREE.Raycaster();
@@ -235,6 +268,7 @@ function animate() {
     requestAnimationFrame(animate);
     controls.update();
     renderer.render(scene, camera);
+    updateSVGVisibility();
 }
 
 animate();
@@ -323,7 +357,7 @@ humanoid.addEventListener("mouseenter", () => {
 });
 
 window.addEventListener("keyup", (event) => {
-    if (event.key === " "){
+    if (event.key === " " || event.key === 'Space'){
         toggleGarageDoor();
     }
 });

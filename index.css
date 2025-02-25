@@ -72,8 +72,9 @@ label {
 }
 
 #graphContainer, #userInfo, #skillsGraphContainer {
-    background-color: rgba(0, 0, 0, 0.29);
+    background-color: rgba(0, 0, 0, 0.542);
     position: absolute;
+    display: none;
     border-radius: 0.5rem;
     padding: 1rem;
     font-family: Arial, Helvetica, sans-serif;
@@ -81,12 +82,17 @@ label {
 
 #userInfo {
     color: white;
-    transform: translate(10.9%, 78.5%);
+    transform: translate(10.9%, 79%);
     letter-spacing: 2px;
+    width: 600px; 
+    height: 200px;
+    overflow: auto; 
 }
 
 #graphContainer {
-    transform: translate(10.4%, 197%);
+    transform: translate(10.4%, 210%);
+    width: 600px; 
+    height: 200px;
 }
 
 #skillsGraphContainer {
@@ -131,7 +137,7 @@ label {
     }
     
     #graphContainer {
-        transform: translate(8%, 209%);
+        transform: translate(8%, 231%);
     }
     
     #skillsGraphContainer {

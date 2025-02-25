@@ -32,6 +32,10 @@ export const displaySVGCharts = (userData) => {
         return;
     }
 
+    document.getElementById('graphContainer').style.display = 'flex';
+    document.getElementById('skillsGraphContainer').style.display = 'flex';
+    document.getElementById('userInfo').style.display = 'block';
+
     const user = userData.data.user[0]; 
     const totalUp = (user.totalUp) || 0;
     const totalDown = (user.totalDown) || 0; 
@@ -83,7 +87,13 @@ export const displaySVGCharts = (userData) => {
         },
         xaxis: {
             categories: auditRatioData.map(data => data.x),
-            labels: { style: { colors: 'white', letterSpacing: '2px' } } 
+            labels: { 
+                style: { colors: 'white', letterSpacing: '2px' },
+                formatter: function (val) {
+                    const mbValue = val / (1000 * 1000);
+                    return mbValue >= 1 ? mbValue.toFixed(1) + " MB" :  mbValue.toFixed(1) + " KB"; 
+                }
+            } 
         },
         yaxis: { labels: { style: { colors: 'white', letterSpacing: '2px' } } } 
     };

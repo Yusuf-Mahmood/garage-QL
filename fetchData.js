@@ -10,15 +10,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            const username = document.getElementById('username').value;
+            const usernamemail = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if (!username || !password) {
+            if (!usernamemail || !password) {
                 console.warn("Username or password is empty!");
                 return;
             }
 
-            const encodedCredentials = btoa(`${username}:${password}`);
+            const isEmail = usernamemail.includes('@');
+            const encodedCredentials = btoa(`${usernamemail.trim()}:${password.trim()}`);
+            const bodyData = isEmail 
+            ? { email: usernamemail, password } 
+            : { username: usernamemail, password };
 
             try {
                 const response = await fetch('https://learn.reboot01.com/api/auth/signin', {
@@ -27,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         'Content-Type': 'application/json',
                         'Authorization': `Basic ${encodedCredentials}`
                     },
-                    body: JSON.stringify({ username, password })
+                    body: JSON.stringify(bodyData)
                 });
             
                 if (!response.ok) {
