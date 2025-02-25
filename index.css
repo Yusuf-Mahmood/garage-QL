@@ -95,7 +95,9 @@ label {
 
 .firstSec, .secondSec {
     display: flex;
-    gap: 5%;
+    justify-content: space-around;
+    text-align: center;
+    gap: 1%;
 }
 
 .lines {

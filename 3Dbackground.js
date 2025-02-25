@@ -323,7 +323,6 @@ humanoid.addEventListener("mouseenter", () => {
 });
 
 window.addEventListener("keyup", (event) => {
-    console.log(event.key);
     if (event.key === " "){
         toggleGarageDoor();
     }

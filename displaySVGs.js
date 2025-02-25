@@ -33,8 +33,8 @@ export const displaySVGCharts = (userData) => {
     }
 
     const user = userData.data.user[0]; 
-    const totalUp = (user.totalUp / 1000) || 0;
-    const totalDown = (user.totalDown / 1000) || 0;
+    const totalUp = (user.totalUp) || 0;
+    const totalDown = (user.totalDown) || 0; 
     const transactions = user.transactions || [];
 
     const auditRatioData = [
@@ -54,6 +54,10 @@ export const displaySVGCharts = (userData) => {
         },
         dataLabels: { 
             enabled: true,
+            formatter: function (val) {
+                const mbValue = val / (1000 * 1000); 
+                return mbValue >= 1 ? parseFloat(mbValue.toPrecision(3)).toString() + ' MB' : parseFloat(mbValue.toPrecision(3)).toString() + ' KB'; 
+            },
             style: { colors: ['white'] } 
         },
         plotOptions: { 
@@ -62,7 +66,7 @@ export const displaySVGCharts = (userData) => {
                 borderRadius: 5,
                 borderRadiusApplication: 'end',
                 colors: {
-                    ranges: [{ from: 0, to: 100, color: 'rgba(255, 255, 255, 0.8)' }], // Light bars for contrast
+                    ranges: [{ from: 0, to: 100, color: '#007bff' }], // Blue bars
                     backgroundBarColors: ['rgba(255, 255, 255, 0.2)'] // Slightly visible background bars
                 }
             } 
@@ -136,7 +140,7 @@ export const displaySVGCharts = (userData) => {
                 borderRadiusApplication: 'end',
                 colors: {
                     ranges: skillLevels.map((_, index) => ({
-                        color: `rgba(${index * 25}, ${index * 25}, ${index * 25}, 0.3)` 
+                        color: '#007bff' // Blue bars
                     })),
                     backgroundBarColors: skillLevels.map((_, index) => 
                         `rgba(${index * 25}, ${index * 25}, ${index * 25}, 0.3)`

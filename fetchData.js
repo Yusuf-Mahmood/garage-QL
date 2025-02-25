@@ -104,7 +104,6 @@ const fetchProfileData = async () => {
         });
 
         const result = await response.json();
-        console.log("GraphQL Response:", result);
 
         if (result) {
             displaySVGCharts(result);
