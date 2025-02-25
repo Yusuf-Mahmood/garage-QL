@@ -119,6 +119,27 @@ label {
     width: 0;
 }
 
+#exitBtn {
+    display: none;
+    position: absolute;
+    top: 2%;
+    letter-spacing: 2px;
+    cursor: pointer;
+    left: 1%;
+    background-color: transparent;
+    font-family: 'ScaryFont';
+    color: red;
+    border: none;
+    font-size: 2rem;
+}
+
+#errorMessage {
+    color: red;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 #humanoid {
     position: fixed;
     display: none;

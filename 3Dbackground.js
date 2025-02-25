@@ -10,7 +10,8 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 let garageDoor, garageLamp, garageCar, flickerInterval, garageBoard, garageThinLight; 
-export let isDoorOpen = false; 
+export let isDoorOpen = false;
+let inGarage = false;
 const humanoid = document.getElementById("humanoid");
 
 const placeholder = new THREE.Mesh(
@@ -161,6 +162,7 @@ function stopFlickerLoop() {
 
 export async function moveToBoard() {
     return new Promise((resolve) => {
+        inGarage = true;
         controls.maxPolarAngle = Math.PI / 2 + 0.8; 
         controls.minPolarAngle = Math.PI / 2 - 0.8;
         controls.maxAzimuthAngle = Infinity;
@@ -225,7 +227,6 @@ function updateSVGVisibility() {
     });
 }
 
-
 window.addEventListener('click', (event) => {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -282,6 +283,7 @@ window.addEventListener('resize', () => {
 document.getElementById("submitBtn").addEventListener("click", () => {
     if (isDoorOpen) {
     } else {
+        document.getElementById('errorMessage').innerText = "Please open the door first!";
         gsap.to(garageDoor.material.color, { r: 1, g: 0, b: 0, duration: 0.5, onComplete: () => {
             gsap.to(garageDoor.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
         }});
@@ -357,7 +359,81 @@ humanoid.addEventListener("mouseenter", () => {
 });
 
 window.addEventListener("keyup", (event) => {
-    if (event.key === " " || event.key === 'Space'){
+    if ((event.key === " " || event.key === 'Space')) {
         toggleGarageDoor();
     }
+    if ((event.key === 'Escape') && inGarage) {
+        document.getElementById('loginForm').reset();
+        document.getElementById('exitBtn').style.display = 'none';
+        document.getElementById('graphContainer').style.display = 'none';
+        document.getElementById('skillsGraphContainer').style.display = 'none';
+        document.getElementById('userInfo').style.display = 'none';
+        document.getElementById('errorMessage').innerHTML = '';
+        humanoid.style.display = 'none';
+        logout();
+    }
+});
+
+let startingCameraPosition = { x: 0, y: 0, z: 3.27 }; // Default position, update after login
+let startingGarageDoorY = garageDoor.position.y; // Capture the initial Y position of the garage door
+
+const logout = async () => {
+    localStorage.removeItem('jwtToken');
+
+    return new Promise((resolve) => {
+        // Animate camera position back to the default position smoothly
+        gsap.to(camera.position, {
+            x: startingCameraPosition.x,
+            y: startingCameraPosition.y,
+            z: startingCameraPosition.z,
+            duration: 3,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                controls.target.set(0, 0, 0);
+                controls.update();
+            },
+            onComplete: () => {
+                document.getElementsByClassName('container')[0].style.display = "flex"; 
+                if (isDoorOpen) {
+                    gsap.to(garageDoor.position, { 
+                        y: garageDoor.userData.initialY, 
+                        duration: 2, 
+                        onComplete: () => {
+                            isDoorOpen = false;
+                            resolve();
+                        }
+                    });
+                } else {
+                    resolve();
+                }
+            }
+        });
+
+        // Animate camera rotation to the default rotation smoothly
+        gsap.to(camera.rotation, {
+            y: 0,
+            duration: 3, 
+            ease: "power2.inOut",
+        });
+    });
+};
+
+export const updateStartingPositions = () => {
+    startingCameraPosition = {
+        x: camera.position.x,
+        y: camera.position.y,
+        z: camera.position.z
+    };
+    startingGarageDoorY = garageDoor.position.y; // Update if garage door position changes
+};
+
+document.getElementById("exitBtn").addEventListener("click", () => {
+    document.getElementById('loginForm').reset();
+    document.getElementById('exitBtn').style.display = 'none';
+    document.getElementById('graphContainer').style.display = 'none';
+    document.getElementById('skillsGraphContainer').style.display = 'none';
+    document.getElementById('userInfo').style.display = 'none';
+    document.getElementById('errorMessage').innerHTML = '';
+    humanoid.style.display = 'none';
+    logout();
 });

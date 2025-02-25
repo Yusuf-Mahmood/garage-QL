@@ -28,6 +28,7 @@
                 <input type="text" id="username" name="username" placeholder="Enter your username or email" required autocomplete="off">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <div id="errorMessage"></div>
                 <input type="submit" value="Submit" id="submitBtn">
             </div>
         </form>
@@ -35,6 +36,7 @@
     <div class="svg-graph" id="graphContainer"></div>
     <div class="svg-graph" id="skillsGraphContainer"></div>
     <div class="svg-graph" id="userInfo"></div>
+    <button id="exitBtn">EXIT</button>
     <script type="module" src="3Dbackground.js"></script>
     <script type="module" src="fetchData.js"></script>
     <script type="module" src="displaySVGs.js"></script>

@@ -1,4 +1,4 @@
-import { isDoorOpen, moveToBoard, jumpscare } from './3Dbackground.js';
+import { isDoorOpen, moveToBoard, updateStartingPositions, jumpscare } from './3Dbackground.js';
 import { displaySVGCharts, displayUserInfo } from './displaySVGs.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -45,11 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     await moveToBoard();
                     fetchProfileData();
                 } else {
-                    alert("Login failed! Invalid Token.");
+                    document.getElementById('errorMessage').innerText = "Invalid Token";
                 }
             } catch (error) {
                 console.error("Error:", error);
-                alert("WHYYYY!!!");
+                document.getElementById('errorMessage').innerText = "Invalid Credentials";
                 // jumpscare();
                 return;
             }            
@@ -110,6 +110,7 @@ const fetchProfileData = async () => {
         const result = await response.json();
 
         if (result) {
+            updateStartingPositions();
             displaySVGCharts(result);
             displayUserInfo(result);
         } else {
@@ -120,4 +121,3 @@ const fetchProfileData = async () => {
         console.error("Error fetching profile data:", error);
     }
 };
-

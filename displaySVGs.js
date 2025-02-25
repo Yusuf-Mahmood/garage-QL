@@ -35,6 +35,7 @@ export const displaySVGCharts = (userData) => {
     document.getElementById('graphContainer').style.display = 'flex';
     document.getElementById('skillsGraphContainer').style.display = 'flex';
     document.getElementById('userInfo').style.display = 'block';
+    document.getElementById('exitBtn').style.display = 'flex';
 
     const user = userData.data.user[0]; 
     const totalUp = (user.totalUp) || 0;
@@ -150,7 +151,7 @@ export const displaySVGCharts = (userData) => {
                 borderRadiusApplication: 'end',
                 colors: {
                     ranges: skillLevels.map((_, index) => ({
-                        color: '#007bff' // Blue bars
+                        color: '#007bff' 
                     })),
                     backgroundBarColors: skillLevels.map((_, index) => 
                         `rgba(${index * 25}, ${index * 25}, ${index * 25}, 0.3)`
