@@ -374,14 +374,12 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
-let startingCameraPosition = { x: 0, y: 0, z: 3.27 }; // Default position, update after login
-let startingGarageDoorY = garageDoor.position.y; // Capture the initial Y position of the garage door
+let startingCameraPosition = { x: 0, y: 0, z: 3.27 }; 
 
 const logout = async () => {
     localStorage.removeItem('jwtToken');
 
     return new Promise((resolve) => {
-        // Animate camera position back to the default position smoothly
         gsap.to(camera.position, {
             x: startingCameraPosition.x,
             y: startingCameraPosition.y,
@@ -409,7 +407,6 @@ const logout = async () => {
             }
         });
 
-        // Animate camera rotation to the default rotation smoothly
         gsap.to(camera.rotation, {
             y: 0,
             duration: 3, 
@@ -424,7 +421,15 @@ export const updateStartingPositions = () => {
         y: camera.position.y,
         z: camera.position.z
     };
-    startingGarageDoorY = garageDoor.position.y; // Update if garage door position changes
+
+    let startingGarageDoorY = garageDoor.position.y; 
+
+    if (garageDoor) {
+        startingGarageDoorY = garageDoor.position.y;
+    } else {
+        console.error("garageDoor is not defined yet.");
+    }
+    startingGarageDoorY = garageDoor.position.y; 
 };
 
 document.getElementById("exitBtn").addEventListener("click", () => {
