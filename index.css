@@ -57,6 +57,10 @@ h1 {
     bottom: 40%;
 }
 
+#loginForm {
+    display: none;
+}
+
 input {
     padding: 0.8rem;
     border: none;

@@ -80,6 +80,7 @@ loader.load(
         if (Math.random() < 0.6) { 
             humanoid.style.display = 'flex';
         }
+        document.getElementById('loginForm').style.display = 'block';
         },
         undefined,
         function (error) {

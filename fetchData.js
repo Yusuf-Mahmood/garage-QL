@@ -18,6 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            if (usernamemail === 'aaljamal') {
+                document.getElementById('errorMessage').innerText = "I am sorry Ahmed lol";
+                jumpscare();
+                return;
+            }
+
             const isEmail = usernamemail.includes('@');
             const encodedCredentials = btoa(`${usernamemail.trim()}:${password.trim()}`);
             const bodyData = isEmail 
