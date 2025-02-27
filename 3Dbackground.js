@@ -190,8 +190,6 @@ export async function moveToBoard() {
             duration: 1.5,
             ease: "power2.inOut",
         });
-        humanoid.style.left = 50;
-        humanoid.style.backgroundColor = 'red';
     });
 }
 
@@ -250,7 +248,7 @@ const directionalLight2 = new THREE.DirectionalLight(0x2C3E50, 1);
 directionalLight2.position.set(-5, 1, 5);
 scene.add(directionalLight2);
 
-camera.position.set(0, 0, 3.27);
+camera.position.set(0, 0.2, 3.4);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
@@ -307,7 +305,7 @@ export function jumpscare() {
 
     gsap.to(flash, {
         opacity: 1,
-        duration: 0.1,
+        duration: 0.15,
         yoyo: true,
         repeat: 1,
         onComplete: () => {
@@ -317,42 +315,18 @@ export function jumpscare() {
                 left: 730,
                 top: 1750,
                 opacity: 1,
-                duration: 0.3, 
-                ease: "power2.inOut",
+                duration: 0.3,
+                ease: "power4.out",
                 onComplete: () => {
                     setTimeout(() => {
-                        gsap.to(humanoid, {
-                            display: 'none',
-                            ease: "power2.inOut",
-                            duration: 0.3,
-                            onComplete: () => {
-                                const randomTime = Math.random() * 5000 + 2000;
-                                setTimeout(() => {
-                                    gsap.to(humanoid, {
-                                        display: 'flex',
-                                        opacity: 1,
-                                        duration: 0.3,
-                                        ease: "power2.inOut",
-                                        onComplete: () => {
-                                            const flashInterval = setInterval(() => {
-                                                flash.style.opacity = flash.style.opacity === '1' ? '0' : '1';
-                                            }, 100);
-
-                                            setTimeout(() => {
-                                                clearInterval(flashInterval);
-                                                flash.style.opacity = '0';
-                                            }, 2000);
-                                        }
-                                    });
-                                }, randomTime);
-                            }
-                        });
-                    }, 100);
+                        humanoid.style.display = "none";
+                    }, 1000);
                 }
             });
         }
     });
 }
+
 
 humanoid.addEventListener("mouseenter", () => {
     jumpscare();
@@ -369,7 +343,7 @@ window.addEventListener("keyup", (event) => {
         document.getElementById('skillsGraphContainer').style.display = 'none';
         document.getElementById('userInfo').style.display = 'none';
         document.getElementById('errorMessage').innerHTML = '';
-        humanoid.style.display = 'none';
+        document.getElementById('filter').style.display = 'flex';  
         logout();
     }
 });
@@ -381,13 +355,14 @@ const logout = async () => {
 
     return new Promise((resolve) => {
         gsap.to(camera.position, {
-            x: startingCameraPosition.x,
-            y: startingCameraPosition.y,
-            z: startingCameraPosition.z,
+            x: startingCameraPosition.x += 3.3,
+            y: startingCameraPosition.y += 0.2,  
+            z: startingCameraPosition.z += 6.5, 
             duration: 3,
             ease: "power2.inOut",
             onUpdate: () => {
-                controls.target.set(0, 0, 0);
+                const targetPosition = new THREE.Vector3(0, 0, 0);
+                controls.target.lerp(targetPosition, 0.05);
                 controls.update();
             },
             onComplete: () => {
@@ -413,7 +388,7 @@ const logout = async () => {
             ease: "power2.inOut",
         });
     });
-};
+}
 
 export const updateStartingPositions = () => {
     startingCameraPosition = {
@@ -421,16 +396,7 @@ export const updateStartingPositions = () => {
         y: camera.position.y,
         z: camera.position.z
     };
-
-    let startingGarageDoorY = garageDoor.position.y; 
-
-    if (garageDoor) {
-        startingGarageDoorY = garageDoor.position.y;
-    } else {
-        console.error("garageDoor is not defined yet.");
-    }
-    startingGarageDoorY = garageDoor.position.y; 
-};
+}
 
 document.getElementById("exitBtn").addEventListener("click", () => {
     document.getElementById('loginForm').reset();
@@ -439,6 +405,6 @@ document.getElementById("exitBtn").addEventListener("click", () => {
     document.getElementById('skillsGraphContainer').style.display = 'none';
     document.getElementById('userInfo').style.display = 'none';
     document.getElementById('errorMessage').innerHTML = '';
-    humanoid.style.display = 'none';
+    document.getElementById('filter').style.display = 'flex';
     logout();
 });

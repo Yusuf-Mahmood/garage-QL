@@ -36,6 +36,7 @@ export const displaySVGCharts = (userData) => {
     document.getElementById('skillsGraphContainer').style.display = 'flex';
     document.getElementById('userInfo').style.display = 'block';
     document.getElementById('exitBtn').style.display = 'flex';
+    document.getElementById('filter').style.display = 'none';
 
     const user = userData.data.user[0]; 
     const totalUp = (user.totalUp) || 0;
