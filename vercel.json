@@ -1,10 +1,13 @@
 {
-    "headers": [
-      {
-        "source": "/public/(.*)",
-        "headers": [
-          { "key": "Content-Type", "value": "model/glb+json" }
-        ]
-      }
-    ]
-  }
+  "headers": [
+    {
+      "source": "/model/(.*\\.glb)",
+      "headers": [
+        { "key": "Content-Type", "value": "model/gltf-binary" }
+      ]
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
