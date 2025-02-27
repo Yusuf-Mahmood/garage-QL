@@ -1,0 +1,10 @@
+{
+    "headers": [
+      {
+        "source": "/assets/(.*)",
+        "headers": [
+          { "key": "Content-Type", "value": "model/glb+json" }
+        ]
+      }
+    ]
+  }
