@@ -134,8 +134,8 @@ label {
 
 .image {
     position: fixed;
-    bottom: 69%;
-    left: 12%;
+    bottom: 68%;
+    left: 5%;
     z-index: 999;
     width: 0;
 }
@@ -170,7 +170,8 @@ label {
 
 @media (min-height: 864px) {
     .image {
-        display: none;
+        left: 5%;
+        bottom: 64%;
     }
     #userInfo {
         color: white;
