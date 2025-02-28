@@ -22,7 +22,7 @@ scene.add(placeholder);
 
 const loader = new GLTFLoader();
 loader.load(
-    'docs/model/mymodel.glb',
+    './model/mymodel.glb',
     function (gltf) {
         scene.remove(placeholder);
         const model = gltf.scene;
