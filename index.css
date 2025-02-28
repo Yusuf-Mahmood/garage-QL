@@ -6,11 +6,15 @@
 }
 
 html, body {
+    position: relative;
     margin: 0;
     padding: 0;
     overflow: hidden;
     height: 100%;
     background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .filter {
@@ -103,7 +107,7 @@ label {
 
 #userInfo {
     color: white;
-    transform: translate(10.9%, 79%);
+    transform: translateX(-9%);
     letter-spacing: 2px;
     width: 600px; 
     height: 200px;
@@ -111,13 +115,35 @@ label {
 }
 
 #graphContainer {
-    transform: translate(10.4%, 210%);
+    transform: translateX(-9%);
     width: 600px; 
-    height: 200px;
+    right: 0%;
+    bottom: -36.5%; 
+    height: 220px;
 }
 
 #skillsGraphContainer {
-    transform: translate(131.9%, 34%);
+    transform: translateX(5%);
+    /* transform: translate(54vw, 25vh); */
+    /* left: 0%; */
+}
+
+.totalSpacing {
+    height: 25rem;
+    display: none;
+    position: absolute;
+    display: flex;
+    /* flex-direction: row; */
+}
+
+.leftSpacing {
+    display: flex;
+    height: 0;
+    /* justify-content: center; */
+}
+.rightSpacing {
+    display: flex;
+    justify-content: flex-end; 
 }
 
 .firstSec, .secondSec {
@@ -173,7 +199,7 @@ label {
         left: 5%;
         bottom: 64%;
     }
-    #userInfo {
+    /* #userInfo {
         color: white;
         transform: translate(8.3%, 92.5%);
         letter-spacing: 2px;
@@ -185,7 +211,7 @@ label {
     
     #skillsGraphContainer {
         transform: translate(131.9%, 40%);
-    }
+    } */
     
 }
 @media (max-width: 768px) {
