@@ -22,7 +22,7 @@ scene.add(placeholder);
 
 const loader = new GLTFLoader();
 loader.load(
-    'public/model/mymodel.glb',
+    'docs/model/mymodel.glb',
     function (gltf) {
         scene.remove(placeholder);
         const model = gltf.scene;
@@ -290,7 +290,7 @@ document.getElementById("submitBtn").addEventListener("click", () => {
 });
 
 export function jumpscare() {
-    const audio = new Audio('public/jumpscare.mp3');
+    const audio = new Audio('docs/jumpscare.mp3');
     audio.play();
 
     const flash = document.createElement('div');
