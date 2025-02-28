@@ -1,6 +1,7 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js";
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/controls/OrbitControls.js";
+import { DRACOLoader } from "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/loaders/DRACOLoader.js";
 import gsap from "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js";
 
 const scene = new THREE.Scene();
@@ -30,9 +31,12 @@ const placeholder = new THREE.Mesh(
 );
 scene.add(placeholder);
 
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/draco/');
 const loader = new GLTFLoader();
+loader.setDRACOLoader(dracoLoader);
 loader.load(
-  "https://hsc9zwxllc.ufs.sh/f/yc9bwsdvmZ79aGualp6BZd6NKwCbnYWruXHUQmvyVExag7c0",
+  'public/model/model5.gltf',
   function (gltf) {
     scene.remove(placeholder);
     const model = gltf.scene;
