@@ -2,6 +2,8 @@
 
 Garage-QL is a GraphQL-powered interactive 3D experience where users can explore a garage environment, authenticate using JWT, and visualize project data with SVG graphs mapped onto a 3D model.
 
+**Deployed on [yusuf-mahmood.github.io/garage-QL](https://yusuf-mahmood.github.io/garage-QL/)**
+
 ## Features 🚀
 
 - **GraphQL API**: Query and manipulate user data seamlessly.
