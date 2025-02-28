@@ -353,6 +353,7 @@ let startingCameraPosition = { x: 0, y: 0, z: 3.27 };
 
 const logout = async () => {
     localStorage.removeItem('jwtToken');
+    inGarage = false;
 
     return new Promise((resolve) => {
         gsap.to(camera.position, {

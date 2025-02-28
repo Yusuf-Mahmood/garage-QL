@@ -49,7 +49,7 @@ export const displaySVGCharts = (userData) => {
     ];
     const options = {
         series: [{
-            name: "Audit Ratio",
+            name: 'Audit Ratio',
             data: auditRatioData
         }],
         chart: {
@@ -72,8 +72,8 @@ export const displaySVGCharts = (userData) => {
                 borderRadius: 5,
                 borderRadiusApplication: 'end',
                 colors: {
-                    ranges: [{ from: 0, to: 100, color: '#007bff' }], // Blue bars
-                    backgroundBarColors: ['rgba(255, 255, 255, 0.2)'] // Slightly visible background bars
+                    ranges: [{ from: 0, to: 100, color: '#007bff' }], 
+                    backgroundBarColors: ['rgba(255, 255, 255, 0.2)'] 
                 }
             } 
         },
@@ -81,7 +81,7 @@ export const displaySVGCharts = (userData) => {
         title: {
             text: 'Audit Ratio',
             align: 'left',
-            style: { color: 'white', letterSpacing: '2px' } 
+            style: { color: 'white' } 
         },
         grid: { 
             borderColor: 'rgba(255, 255, 255, 0.3)', 

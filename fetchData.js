@@ -99,13 +99,6 @@ const fetchProfileData = async () => {
                     path
                 }
             }
-            transactions_aggregate: transaction_aggregate(where: {type: {_eq: "xp"}}) {
-                aggregate {
-                    avg {
-                        amount
-                    }
-                }
-            }
         }`
     };
 
