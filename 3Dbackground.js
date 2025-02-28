@@ -22,7 +22,7 @@ scene.add(placeholder);
 
 const loader = new GLTFLoader();
 loader.load(
-    './model/mymodel.glb',
+    'https://hsc9zwxllc.ufs.sh/f/yc9bwsdvmZ79aGualp6BZd6NKwCbnYWruXHUQmvyVExag7c0',
     function (gltf) {
         scene.remove(placeholder);
         const model = gltf.scene;
@@ -77,7 +77,7 @@ loader.load(
         } else {
             console.warn('Thin light not found in model.');
         }
-        if (Math.random() < 0.6) { 
+        if (Math.random() < 0.7) { 
             humanoid.style.display = 'flex';
         }
         document.getElementById('loginForm').style.display = 'block';
@@ -282,7 +282,7 @@ window.addEventListener('resize', () => {
 document.getElementById("submitBtn").addEventListener("click", () => {
     if (isDoorOpen) {
     } else {
-        document.getElementById('errorMessage').innerText = "Please open the door first!";
+        document.getElementById('errorMessage').innerText = "[Space] or click garage door first!";
         gsap.to(garageDoor.material.color, { r: 1, g: 0, b: 0, duration: 0.5, onComplete: () => {
             gsap.to(garageDoor.material.color, { r: 1, g: 1, b: 1, duration: 0.5 });
         }});
@@ -290,7 +290,7 @@ document.getElementById("submitBtn").addEventListener("click", () => {
 });
 
 export function jumpscare() {
-    const audio = new Audio('docs/jumpscare.mp3');
+    const audio = new Audio('public/jumpscare.mp3');
     audio.play();
 
     const flash = document.createElement('div');
@@ -316,7 +316,7 @@ export function jumpscare() {
                 left: 730,
                 top: 1750,
                 opacity: 1,
-                duration: 0.3,
+                duration: 0.15,
                 ease: "power4.out",
                 onComplete: () => {
                     setTimeout(() => {

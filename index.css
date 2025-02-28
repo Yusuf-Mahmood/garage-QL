@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'ScaryFont';
-    src: url('docs/font/OctoberCrow.ttf') format('truetype'); 
+    src: url('public/font/OctoberCrow.ttf') format('truetype'); 
     font-weight: bold;
     font-style: normal;
 }

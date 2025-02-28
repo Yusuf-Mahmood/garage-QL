@@ -17,11 +17,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn("Username or password is empty!");
                 return;
             }
+            let onceJumpScare = sessionStorage.getItem('jumpScareTriggered') === 'true';
 
-            if (usernamemail === 'aaljamal') {
-                document.getElementById('errorMessage').innerText = "I am sorry Ahmed lol";
-                jumpscare();
-                return;
+            if (!onceJumpScare) {
+                if (usernamemail === 'aaljamal') {
+                    onceJumpScare = true;
+                    sessionStorage.setItem('jumpScareTriggered', 'true');
+                    humanoid.style.display = 'flex';
+                    document.getElementById('errorMessage').innerText = "I am sorry Ahmed lol";
+                    jumpscare();
+                    return;
+                }
             }
 
             const isEmail = usernamemail.includes('@');
