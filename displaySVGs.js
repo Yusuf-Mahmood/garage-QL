@@ -141,6 +141,7 @@ export const displaySVGCharts = (userData) => {
     "skill_c-pp",
     "skill_js",
     "skill_game",
+    "skill_prog"
   ];
 
   const skillAmounts = skills.reduce((acc, skill) => {
