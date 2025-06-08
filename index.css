@@ -1,12 +1,11 @@
 @font-face {
     font-family: 'ScaryFont';
-    src: url('public/font/OctoberCrow.ttf') format('truetype');
+    src: url('public/font/OctoberCrow.ttf') format('truetype'); 
     font-weight: bold;
     font-style: normal;
 }
 
-html,
-body {
+html, body {
     position: relative;
     margin: 0;
     padding: 0;
@@ -30,20 +29,13 @@ body {
 }
 
 @keyframes horrorMist {
-    50% {
-        transform: translateY(5%);
-        opacity: 0.6;
-    }
-
-    100% {
-        transform: translateY(0);
-        opacity: 0.8;
-    }
+    50% { transform: translateY(5%); opacity: 0.6; }
+    100% { transform: translateY(0); opacity: 0.8; }
 }
 
 canvas {
-    display: block;
-    width: 100vw;
+    display: block; 
+    width: 100vw; 
     height: 100vh;
 }
 
@@ -89,8 +81,7 @@ input[type="submit"] {
     align-self: center;
     width: 10rem;
     cursor: pointer;
-
-    &:hover {
+    &:hover{
         background-color: rgb(104, 103, 103);
         color: black;
     }
@@ -105,9 +96,7 @@ label {
     letter-spacing: 5px;
 }
 
-#graphContainer,
-#userInfo,
-#skillsGraphContainer {
+#graphContainer, #userInfo, #skillsGraphContainer {
     background-color: rgba(0, 0, 0, 0.542);
     position: absolute;
     display: none;
@@ -121,16 +110,16 @@ label {
     color: white;
     transform: translateX(-9%);
     letter-spacing: 2px;
-    width: 600px;
+    width: 600px; 
     height: 200px;
-    overflow: auto;
+    overflow: auto; 
 }
 
 #graphContainer {
     transform: translateX(-9%);
-    width: 600px;
+    width: 600px; 
     right: 0%;
-    bottom: -36.5%;
+    bottom: -36.5%; 
     height: 220px;
 }
 
@@ -153,14 +142,12 @@ label {
     height: 0;
     /* justify-content: center; */
 }
-
 .rightSpacing {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; 
 }
 
-.firstSec,
-.secondSec {
+.firstSec, .secondSec {
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -214,7 +201,6 @@ label {
         left: 5%;
         bottom: 64%;
     }
-
     /* #userInfo {
         color: white;
         transform: translate(8.3%, 92.5%);
@@ -228,19 +214,16 @@ label {
     #skillsGraphContainer {
         transform: translate(131.9%, 40%);
     } */
-
+    
 }
-
 @media (max-width: 768px) {
     .loginContainer {
         right: 8%;
     }
-
     #humanoid {
         display: none !important;
     }
-
-    #userInfo {
+     #userInfo {
         transform: translate(50%, -10%);
     }
 
@@ -254,29 +237,24 @@ label {
 }
 
 @media (max-width: 480px) {
-    #humanoid {
-        display: none !important;
-    }
-
     h1 {
-        font-size: 2.6rem;
+        font-size: 2rem;
     }
-
     input[type="submit"] {
-        width: 8rem;
+        width: 7rem;
+        transform: translateX(30%);
     }
-
     label {
-        font-size: 1.2rem;
+        transform: translateX(20%);
+        font-size: 1rem;
     }
-
-    input[type="text"],
-    input[type="password"] {
-        width: 10rem;
+    input[type="text"], input[type="password"] {
+        transform: translateX(25%);
+        width: 8rem;
         margin-left: 0.5rem;
     }
-
     #errorMessage {
-        font-size: 0.8rem;
+        transform: translateX(20%);
+        font-size: 0.7rem;
     }
 }
