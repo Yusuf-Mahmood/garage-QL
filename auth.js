@@ -1,5 +1,14 @@
-import { isDoorOpen, jumpscare, moveToBoard } from "./3Dbackground.js";
+import { isDoorOpen, jumpscare, moveToBoard, onModelLoaded, toggleGarageDoor } from "./3Dbackground.js";
 import { fetchProfileData } from "./fetchData.js";
+
+onModelLoaded(async () => {
+    const existingToken = localStorage.getItem("jwtToken");
+    if (existingToken) {
+        toggleGarageDoor();
+        await moveToBoard();
+        fetchProfileData();
+    }
+});
 
 const loginForm = document.getElementById("loginForm");
 loginForm.addEventListener("submit", async (event) => {
@@ -56,7 +65,6 @@ loginForm.addEventListener("submit", async (event) => {
         }
 
         const data = await response.json();
-
         if (data) {
             localStorage.setItem("jwtToken", data);
             await moveToBoard();

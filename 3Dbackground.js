@@ -35,6 +35,12 @@ const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/draco/');
 const loader = new GLTFLoader();
 loader.setDRACOLoader(dracoLoader);
+
+let onModelLoadedCallbacks = [];
+export function onModelLoaded(cb) {
+  onModelLoadedCallbacks.push(cb);
+}
+
 loader.load(
   'public/model/model5.gltf',
   function (gltf) {
@@ -95,6 +101,7 @@ loader.load(
       humanoid.style.display = "flex";
     }
     document.getElementById("loginForm").style.display = "block";
+    onModelLoadedCallbacks.forEach(cb => cb());
   },
   undefined,
   function (error) {
@@ -124,7 +131,7 @@ function addThinLight(thinLight) {
   thinLight.add(boardThinLight);
 }
 
-function toggleGarageDoor() {
+export function toggleGarageDoor() {
   if (isDoorOpen) {
     gsap.to(garageDoor.position, {
       y: garageDoor.userData.initialY,
