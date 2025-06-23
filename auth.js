@@ -3,12 +3,31 @@ import { fetchProfileData } from "./fetchData.js";
 
 onModelLoaded(async () => {
     const existingToken = localStorage.getItem("jwtToken");
-    if (existingToken) {
+    if (existingToken && isValidJWT(existingToken)) {
         toggleGarageDoor();
         await moveToBoard();
         fetchProfileData();
+    } else {
+        localStorage.removeItem("jwtToken");
     }
 });
+
+function isValidJWT(token) {
+  try {
+    const parts = token.split(".");
+    if (parts.length !== 3) return false;
+
+    const payload = JSON.parse(atob(parts[1].replace(/-/g, "+").replace(/_/g, "/")));
+    const now = Math.floor(Date.now() / 1000);
+
+    if (payload.exp && now >= payload.exp) return false;
+
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 
 const loginForm = document.getElementById("loginForm");
 loginForm.addEventListener("submit", async (event) => {
