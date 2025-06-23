@@ -138,7 +138,11 @@ export function toggleGarageDoor() {
       duration: 1,
     });
     stopFlickerLoop();
+    document.getElementById("loginContainer").style.display = "none"; 
+    document.getElementById("scaryMessage").style.display = "flex"; 
   } else {
+    document.getElementById("loginContainer").style.display = "flex";
+    document.getElementById("scaryMessage").style.display = "none";
     gsap.to(garageDoor.position, { y: 0.6, duration: 1 });
     let timer = setTimeout(() => {
       startFlickerLoop();
@@ -307,10 +311,9 @@ window.addEventListener("resize", () => {
   camera.updateProjectionMatrix();
 });
 document.getElementById("submitBtn").addEventListener("click", () => {
-  if (isDoorOpen) {
-  } else {
+  if (!isDoorOpen) {
     document.getElementById("errorMessage").innerText =
-      "[Space] or click garage door first!";
+      "Garage needs to be open first! (click space to open)";
     gsap.to(garageDoor.material.color, {
       r: 1,
       g: 0,
@@ -378,6 +381,8 @@ window.addEventListener("keyup", (event) => {
     document.getElementById("userInfo").style.display = "none";
     document.getElementById("errorMessage").innerHTML = "";
     document.getElementById("filter").style.display = "flex";
+    document.getElementById("loginContainer").style.display = "none"; 
+    document.getElementById("scaryMessage").style.display = "flex"; 
     logout();
   }
 });
@@ -391,7 +396,7 @@ const logout = async () => {
   return new Promise((resolve) => {
     gsap.to(camera.position, {
       x: (startingCameraPosition.x += 3.3),
-      y: (startingCameraPosition.y += 0.2),
+      y: (startingCameraPosition.y += 0.1),
       z: (startingCameraPosition.z += 6.5),
       duration: 3,
       ease: "power2.inOut",
@@ -405,7 +410,7 @@ const logout = async () => {
         if (isDoorOpen) {
           gsap.to(garageDoor.position, {
             y: garageDoor.userData.initialY,
-            duration: 2,
+            duration: 1,
             onComplete: () => {
               isDoorOpen = false;
               resolve();
@@ -441,5 +446,7 @@ document.getElementById("exitBtn").addEventListener("click", () => {
   document.getElementById("userInfo").style.display = "none";
   document.getElementById("errorMessage").innerHTML = "";
   document.getElementById("filter").style.display = "flex";
+  document.getElementById("loginContainer").style.display = "none"; 
+  document.getElementById("scaryMessage").style.display = "flex"; 
   logout();
 });

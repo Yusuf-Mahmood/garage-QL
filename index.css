@@ -1,11 +1,12 @@
 @font-face {
     font-family: 'ScaryFont';
-    src: url('public/font/OctoberCrow.ttf') format('truetype'); 
+    src: url('public/font/OctoberCrow.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
 }
 
-html, body {
+html,
+body {
     position: relative;
     margin: 0;
     padding: 0;
@@ -29,13 +30,20 @@ html, body {
 }
 
 @keyframes horrorMist {
-    50% { transform: translateY(5%); opacity: 0.6; }
-    100% { transform: translateY(0); opacity: 0.8; }
+    50% {
+        transform: translateY(5%);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 0.8;
+    }
 }
 
 canvas {
-    display: block; 
-    width: 100vw; 
+    display: block;
+    width: 100vw;
     height: 100vh;
 }
 
@@ -45,6 +53,7 @@ h1 {
     left: 50%;
     transform: translate(-50%, -50%);
     color: rgb(182, 180, 180);
+    text-shadow: 2px 2px 8px #000, 0 0 10px #ff0000;
     font-family: 'ScaryFont';
     letter-spacing: 5px;
     font-size: 3rem;
@@ -52,13 +61,39 @@ h1 {
     cursor: default;
 }
 
+.scary-message {
+    position: absolute;
+    font-family: 'ScaryFont';
+    color: rgb(182, 180, 180);
+    font-size: 2rem;
+    text-align: center;
+    letter-spacing: 2px;
+    z-index: 999;
+    right: 18%;
+    bottom: 50%;
+    opacity: 1;
+    cursor: default;
+    transition: opacity 0.7s;
+    text-shadow: 2px 2px 8px #000, 0 0 10px #ff0000;
+}
+
 .loginContainer {
     z-index: 999;
     position: absolute;
+    display: none;
+    flex-direction: column;
+    right: 15%;
+    bottom: 40%;
+    align-items: center;
+}
+
+.login-fields {
+    opacity: 0;
+    transition: opacity 0.7s;
     display: flex;
     flex-direction: column;
-    right: 20%;
-    bottom: 40%;
+    align-items: center;
+    width: 100%;
 }
 
 #loginForm {
@@ -81,7 +116,8 @@ input[type="submit"] {
     align-self: center;
     width: 10rem;
     cursor: pointer;
-    &:hover{
+
+    &:hover {
         background-color: rgb(104, 103, 103);
         color: black;
     }
@@ -91,12 +127,15 @@ label {
     margin-top: 1.5rem;
     color: rgb(182, 180, 180);
     font-family: 'ScaryFont';
+    text-shadow: 2px 2px 8px #000, 0 0 10px #ff0000;
     font-size: 1.5rem;
     padding: 10px;
     letter-spacing: 5px;
 }
 
-#graphContainer, #userInfo, #skillsGraphContainer {
+#graphContainer,
+#userInfo,
+#skillsGraphContainer {
     background-color: rgba(0, 0, 0, 0.542);
     position: absolute;
     display: none;
@@ -110,16 +149,16 @@ label {
     color: white;
     transform: translateX(-9%);
     letter-spacing: 2px;
-    width: 600px; 
+    width: 600px;
     height: 200px;
-    overflow: auto; 
+    overflow: auto;
 }
 
 #graphContainer {
     transform: translateX(-9%);
-    width: 600px; 
+    width: 600px;
     right: 0%;
-    bottom: -36.5%; 
+    bottom: -36.5%;
     height: 220px;
 }
 
@@ -142,12 +181,14 @@ label {
     height: 0;
     /* justify-content: center; */
 }
+
 .rightSpacing {
     display: flex;
-    justify-content: flex-end; 
+    justify-content: flex-end;
 }
 
-.firstSec, .secondSec {
+.firstSec,
+.secondSec {
     display: flex;
     justify-content: space-around;
     text-align: center;
@@ -184,6 +225,7 @@ label {
 #errorMessage {
     color: red;
     display: flex;
+    width: 25rem;
     justify-content: center;
     margin-top: 1rem;
 }
@@ -201,6 +243,7 @@ label {
         left: 5%;
         bottom: 64%;
     }
+
     /* #userInfo {
         color: white;
         transform: translate(8.3%, 92.5%);
@@ -214,16 +257,19 @@ label {
     #skillsGraphContainer {
         transform: translate(131.9%, 40%);
     } */
-    
+
 }
+
 @media (max-width: 768px) {
     .loginContainer {
         right: 8%;
     }
+
     #humanoid {
         display: none !important;
     }
-     #userInfo {
+
+    #userInfo {
         transform: translate(50%, -10%);
     }
 
@@ -240,19 +286,24 @@ label {
     h1 {
         font-size: 2rem;
     }
+
     input[type="submit"] {
         width: 7rem;
         transform: translateX(30%);
     }
+
     label {
         transform: translateX(20%);
         font-size: 1rem;
     }
-    input[type="text"], input[type="password"] {
+
+    input[type="text"],
+    input[type="password"] {
         transform: translateX(25%);
         width: 8rem;
         margin-left: 0.5rem;
     }
+
     #errorMessage {
         transform: translateX(20%);
         font-size: 0.7rem;
